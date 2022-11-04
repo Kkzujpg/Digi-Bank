@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 01-11-2022 a las 19:32:58
--- Versión del servidor: 5.5.28
+-- Tiempo de generación: 04-11-2022 a las 03:09:42
+-- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,17 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `deposito` (
-  `id` int(10) NOT NULL,
-  `divisa` varchar(255) NOT NULL
+  `id_deposito` int(10) NOT NULL,
+  `divisa` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `deposito`
 --
 
-INSERT INTO `deposito` (`id`, `divisa`) VALUES
+INSERT INTO `deposito` (`id_deposito`, `divisa`) VALUES
 (1, 'Euro'),
-(2, 'Dolar');
+(2, 'Dolar'),
+(3, '');
 
 -- --------------------------------------------------------
 
@@ -47,9 +48,9 @@ INSERT INTO `deposito` (`id`, `divisa`) VALUES
 --
 
 CREATE TABLE `prestamo` (
-  `id` int(10) NOT NULL,
+  `id_prestamo` int(10) NOT NULL,
   `valor_prestamo` float NOT NULL,
-  `n_cuotas` int(3) NOT NULL,
+  `n_cuotas` int(3) DEFAULT NULL,
   `activo_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -57,11 +58,13 @@ CREATE TABLE `prestamo` (
 -- Volcado de datos para la tabla `prestamo`
 --
 
-INSERT INTO `prestamo` (`id`, `valor_prestamo`, `n_cuotas`, `activo_id`) VALUES
+INSERT INTO `prestamo` (`id_prestamo`, `valor_prestamo`, `n_cuotas`, `activo_id`) VALUES
 (1, 80000, 12, 1),
 (2, 1000000, 100, 3),
 (3, 5000000, 240, 4),
-(4, 200000, 80, 2);
+(4, 200000, 80, 2),
+(5, 800000, NULL, 6),
+(6, 60000, NULL, 6);
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,7 @@ INSERT INTO `producto` (`id`, `nombre_p`, `monto_max`, `tproducto_id`) VALUES
 --
 
 CREATE TABLE `producto_deposito` (
-  `id` int(10) NOT NULL,
+  `id_p_deposito` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL,
   `id_deposito` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -104,9 +107,13 @@ CREATE TABLE `producto_deposito` (
 -- Volcado de datos para la tabla `producto_deposito`
 --
 
-INSERT INTO `producto_deposito` (`id`, `id_producto`, `id_deposito`) VALUES
+INSERT INTO `producto_deposito` (`id_p_deposito`, `id_producto`, `id_deposito`) VALUES
 (1, 5, 2),
-(2, 6, 1);
+(2, 6, 1),
+(3, 1, 3),
+(4, 2, 3),
+(5, 3, 3),
+(6, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -115,7 +122,7 @@ INSERT INTO `producto_deposito` (`id`, `id_producto`, `id_deposito`) VALUES
 --
 
 CREATE TABLE `producto_prestamo` (
-  `id` int(10) NOT NULL,
+  `id_p_prestamo` int(10) NOT NULL,
   `id_prestamo` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -124,11 +131,13 @@ CREATE TABLE `producto_prestamo` (
 -- Volcado de datos para la tabla `producto_prestamo`
 --
 
-INSERT INTO `producto_prestamo` (`id`, `id_prestamo`, `id_producto`) VALUES
+INSERT INTO `producto_prestamo` (`id_p_prestamo`, `id_prestamo`, `id_producto`) VALUES
 (1, 1, 3),
 (2, 2, 2),
 (3, 3, 1),
-(4, 4, 4);
+(4, 4, 4),
+(5, 6, 6),
+(6, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -137,7 +146,7 @@ INSERT INTO `producto_prestamo` (`id`, `id_prestamo`, `id_producto`) VALUES
 --
 
 CREATE TABLE `producto_segmento` (
-  `id` int(10) NOT NULL,
+  `id_p_segmento` int(10) NOT NULL,
   `id_segmento` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -146,7 +155,7 @@ CREATE TABLE `producto_segmento` (
 -- Volcado de datos para la tabla `producto_segmento`
 --
 
-INSERT INTO `producto_segmento` (`id`, `id_segmento`, `id_producto`) VALUES
+INSERT INTO `producto_segmento` (`id_p_segmento`, `id_segmento`, `id_producto`) VALUES
 (1, 1, 3),
 (2, 1, 2),
 (3, 1, 5),
@@ -189,20 +198,21 @@ INSERT INTO `segmentos` (`id`, `nombre`) VALUES
 --
 
 CREATE TABLE `tipo_activo` (
-  `id` int(10) NOT NULL,
-  `nombre_activo` varchar(255) NOT NULL
+  `id_activo` int(10) NOT NULL,
+  `nombre_activo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipo_activo`
 --
 
-INSERT INTO `tipo_activo` (`id`, `nombre_activo`) VALUES
+INSERT INTO `tipo_activo` (`id_activo`, `nombre_activo`) VALUES
 (1, 'Carro'),
 (2, 'Camioneta'),
 (3, 'Casa'),
 (4, 'Apartamento'),
-(5, 'Campo');
+(5, 'Campo'),
+(6, '');
 
 -- --------------------------------------------------------
 
@@ -211,7 +221,7 @@ INSERT INTO `tipo_activo` (`id`, `nombre_activo`) VALUES
 --
 
 CREATE TABLE `tipo_producto` (
-  `id` int(10) NOT NULL,
+  `id_t_producto` int(10) NOT NULL,
   `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -219,7 +229,7 @@ CREATE TABLE `tipo_producto` (
 -- Volcado de datos para la tabla `tipo_producto`
 --
 
-INSERT INTO `tipo_producto` (`id`, `nombre`) VALUES
+INSERT INTO `tipo_producto` (`id_t_producto`, `nombre`) VALUES
 (1, 'Prestamo Hipotecario'),
 (2, 'Prestamo Automotor'),
 (3, 'Cuentas Vista');
@@ -232,14 +242,13 @@ INSERT INTO `tipo_producto` (`id`, `nombre`) VALUES
 -- Indices de la tabla `deposito`
 --
 ALTER TABLE `deposito`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_deposito`);
 
 --
 -- Indices de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `FK_prestamo_tipo_activo` (`activo_id`) USING BTREE;
+  ADD PRIMARY KEY (`id_prestamo`);
 
 --
 -- Indices de la tabla `producto`
@@ -252,7 +261,7 @@ ALTER TABLE `producto`
 -- Indices de la tabla `producto_deposito`
 --
 ALTER TABLE `producto_deposito`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_p_deposito`),
   ADD KEY `FK_producto` (`id_producto`),
   ADD KEY `FK_deposito` (`id_deposito`);
 
@@ -260,7 +269,7 @@ ALTER TABLE `producto_deposito`
 -- Indices de la tabla `producto_prestamo`
 --
 ALTER TABLE `producto_prestamo`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_p_prestamo`),
   ADD KEY `FK_prestamo` (`id_prestamo`),
   ADD KEY `FK_producto_prestamo` (`id_producto`);
 
@@ -268,7 +277,7 @@ ALTER TABLE `producto_prestamo`
 -- Indices de la tabla `producto_segmento`
 --
 ALTER TABLE `producto_segmento`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_p_segmento`),
   ADD KEY `FK_segmento` (`id_segmento`),
   ADD KEY `FK_segmento_producto` (`id_producto`);
 
@@ -282,13 +291,13 @@ ALTER TABLE `segmentos`
 -- Indices de la tabla `tipo_activo`
 --
 ALTER TABLE `tipo_activo`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_activo`);
 
 --
 -- Indices de la tabla `tipo_producto`
 --
 ALTER TABLE `tipo_producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_t_producto`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -298,13 +307,13 @@ ALTER TABLE `tipo_producto`
 -- AUTO_INCREMENT de la tabla `deposito`
 --
 ALTER TABLE `deposito`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_deposito` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_prestamo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -316,19 +325,19 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `producto_deposito`
 --
 ALTER TABLE `producto_deposito`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_p_deposito` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_prestamo`
 --
 ALTER TABLE `producto_prestamo`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_p_prestamo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_segmento`
 --
 ALTER TABLE `producto_segmento`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_p_segmento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `segmentos`
@@ -340,13 +349,13 @@ ALTER TABLE `segmentos`
 -- AUTO_INCREMENT de la tabla `tipo_activo`
 --
 ALTER TABLE `tipo_activo`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_activo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_producto`
 --
 ALTER TABLE `tipo_producto`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_t_producto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -356,34 +365,34 @@ ALTER TABLE `tipo_producto`
 -- Filtros para la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  ADD CONSTRAINT `FK_prestamo_activo` FOREIGN KEY (`activo_id`) REFERENCES `tipo_activo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_prestamo_activo` FOREIGN KEY (`activo_id`) REFERENCES `tipo_activo` (`id_activo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `FK_producto_tproducto` FOREIGN KEY (`tproducto_id`) REFERENCES `tipo_producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_producto_tproducto` FOREIGN KEY (`tproducto_id`) REFERENCES `tipo_producto` (`id_t_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `producto_deposito`
 --
 ALTER TABLE `producto_deposito`
-  ADD CONSTRAINT `FK_deposito` FOREIGN KEY (`id_deposito`) REFERENCES `deposito` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_deposito` FOREIGN KEY (`id_deposito`) REFERENCES `deposito` (`id_deposito`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `producto_prestamo`
 --
 ALTER TABLE `producto_prestamo`
-  ADD CONSTRAINT `FK_producto_prestamo` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_prestamo` FOREIGN KEY (`id_prestamo`) REFERENCES `prestamo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_prestamo` FOREIGN KEY (`id_prestamo`) REFERENCES `prestamo` (`id_prestamo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_producto_prestamo` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `producto_segmento`
 --
 ALTER TABLE `producto_segmento`
-  ADD CONSTRAINT `FK_segmento_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_segmento` FOREIGN KEY (`id_segmento`) REFERENCES `segmentos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_segmento` FOREIGN KEY (`id_segmento`) REFERENCES `segmentos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_segmento_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,5 +9,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(productosRoutes);
 
-app.listen(3050);
-console.log('Server running on port 3050');
+const port = process.env.PORT || 3050;
+app.listen(port, () => console.log(`Server running on port ${port}`));

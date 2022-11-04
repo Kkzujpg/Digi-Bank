@@ -22,8 +22,10 @@
 }
 
 .home_sideBar {
-  flex-basis: 280px;
-  padding: 20px;
+  height: '100%';
+  display: block;
+  flex-basis: 130px;
+  padding: 5%;
   background-color: #415a77;
 }
 
@@ -33,7 +35,7 @@
   flex-direction: column;
   flex: 1;
   background-color: #e0e1dd;
-  padding: 50px;
+  padding: 20px;
 }
 
 ::-webkit-scrollbar {

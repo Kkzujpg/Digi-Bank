@@ -32,7 +32,9 @@ function App() {
           >
             Sección de productos de DigiBank
           </Typography>
-          <UserTable />
+          <div style={{ height: 400, width: '100%' }}>
+            <UserTable />
+          </div>
         </Box>
       </Box>
     </Box>
