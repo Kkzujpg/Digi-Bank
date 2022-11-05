@@ -23,10 +23,13 @@
 
 .home_sideBar {
   height: '100%';
-  display: block;
+  display: flex;
   flex-basis: 130px;
   padding: 5%;
   background-color: #415a77;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .home_dashBoard {

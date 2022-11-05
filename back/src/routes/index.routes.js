@@ -3,6 +3,26 @@ import { pool } from '../db.js';
 
 const router = Router();
 
+router.post('/', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.json(err);
+    } else {
+      connection.query(
+        'UPDATE producto SET nombre_p=? WHERE id=?',
+        [req.body.nombre_p, req.body.id],
+        (err, rows) => {
+          if (err) {
+            res.json(err);
+          } else {
+            res.json(rows);
+          }
+        }
+      );
+    }
+  });
+});
+
 router.get('/api/productos', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {

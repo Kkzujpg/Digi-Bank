@@ -10,36 +10,26 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export var urlapi = '';
+const SideBar = ({ setList }) => {
+  const [value, setValue] = React.useState('api/productos');
 
-const SideBar = () => {
-  const [value, setValue] = React.useState('todo');
-
-  const handleRadioChange = (event) => {
+  const handleChange = (event) => {
     setValue(event.target.value);
+    fetch('http://localhost:3050/' + event.target.value)
+      .then((response) => response.json())
+      .then((json) => setList(json));
   };
-  if (value === 'todo') {
-    urlapi = 'http://localhost:3050/api/productos';
-  } else if (value === 'hipotecario') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/hipotecario';
-  } else if (value === 'automotor') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/automotor';
-  } else if (value === 'vista') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/vista';
-  } else if (value === 'jovenes') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/jovenes';
-  } else if (value === 'standard') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/standard';
-  } else if (value === 'premium') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/premium';
-  } else if (value === 'carro') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/carro';
-  } else if (value === 'camioneta') {
-    urlapi = 'http://localhost:3050/api/productos/filtro/camioneta';
-  }
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Card sx={{ minWidth: 230, borderRadius: '20px' }}>
+      <Card
+        sx={{
+          minWidth: 230,
+          width: '280px',
+          borderRadius: '20px',
+          height: '860px',
+        }}
+      >
         <CardContent>
           <Typography
             sx={{ fontSize: 18 }}
@@ -61,22 +51,21 @@ const SideBar = () => {
             </FormLabel>
             <RadioGroup
               aria-labelledby='demo-radio-buttons-group-label'
-              defaultValue='todo'
               name='radio-buttons-group'
               value={value}
-              onChange={handleRadioChange}
+              onChange={handleChange}
             >
               <FormControlLabel
-                value='todo'
+                value='api/productos'
                 control={<Radio />}
                 label={
                   <Typography fontSize={13} variant='h6' color='textSecondary'>
-                    Todo
+                    Todos
                   </Typography>
                 }
               />
               <FormControlLabel
-                value='hipotecario'
+                value='api/productos/filtro/hipotecario'
                 control={<Radio />}
                 label={
                   <Typography fontSize={13} variant='h6' color='textSecondary'>
@@ -90,7 +79,7 @@ const SideBar = () => {
                     Prestamo automotor
                   </Typography>
                 }
-                value='automotor'
+                value='api/productos/filtro/automotor'
                 control={<Radio />}
               />
               <FormControlLabel
@@ -99,7 +88,7 @@ const SideBar = () => {
                     Cuentas vista
                   </Typography>
                 }
-                value='vista'
+                value='api/productos/filtro/vista'
                 control={<Radio />}
               />
               <FormLabel
@@ -114,13 +103,13 @@ const SideBar = () => {
                 Segmentos:
               </FormLabel>
               <FormControlLabel
-                value='jovenes'
-                control={<Radio />}
                 label={
                   <Typography fontSize={13} variant='h6' color='textSecondary'>
                     Jovenes
                   </Typography>
                 }
+                value='api/productos/filtro/jovenes'
+                control={<Radio />}
               />
               <FormControlLabel
                 label={
@@ -128,7 +117,7 @@ const SideBar = () => {
                     Standard
                   </Typography>
                 }
-                value='standard'
+                value='api/productos/filtro/standard'
                 control={<Radio />}
               />
               <FormControlLabel
@@ -137,7 +126,7 @@ const SideBar = () => {
                     Premium
                   </Typography>
                 }
-                value='premium'
+                value='api/productos/filtro/premium'
                 control={<Radio />}
               />
               <FormLabel
@@ -147,7 +136,6 @@ const SideBar = () => {
                     color='textSecondary'
                   ></Typography>
                 }
-                id='demo-radio-buttons-group-label'
               >
                 Tipo de vehiculo:
               </FormLabel>
@@ -157,7 +145,7 @@ const SideBar = () => {
                     Carro
                   </Typography>
                 }
-                value='carro'
+                value='api/productos/filtro/carro'
                 control={<Radio />}
               />
               <FormControlLabel
@@ -166,7 +154,7 @@ const SideBar = () => {
                     Camioneta
                   </Typography>
                 }
-                value='camioneta'
+                value='api/productos/filtro/camioneta'
                 control={<Radio />}
               />
             </RadioGroup>
@@ -177,6 +165,5 @@ const SideBar = () => {
     </Box>
   );
 };
-console.log(urlapi);
 
 export default SideBar;

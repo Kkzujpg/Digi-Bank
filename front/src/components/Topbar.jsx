@@ -5,12 +5,14 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 const Topbar = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}>
-      <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
         <AccountBalanceIcon
           sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: '#E0E1DD' }}
         />
         <Typography
-          variant='h6'
+          variant='h2'
           noWrap
           component='a'
           sx={{
@@ -25,7 +27,12 @@ const Topbar = () => {
           DigiBank
         </Typography>
         <AccountBalanceIcon
-          sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: '#E0E1DD' }}
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            mr: 1,
+            color: '#E0E1DD',
+          }}
+          fontSize='large'
         />
         <Typography
           variant='h5'

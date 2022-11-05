@@ -58,7 +58,7 @@ const colors = {
   },
 };
 
-export const Thetheme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: colors.primary[500],
@@ -73,6 +73,7 @@ export const Thetheme = createTheme({
     },
     background: {
       default: colors.bg[500],
+      paper: 'white',
     },
   },
   typography: {
@@ -101,6 +102,13 @@ export const Thetheme = createTheme({
     h6: {
       fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
       fontSize: 14,
+    },
+  },
+  components: {
+    MuiIcon: {
+      styleOverrides: {
+        root: { fontSize: '32px !important' },
+      },
     },
   },
 });
